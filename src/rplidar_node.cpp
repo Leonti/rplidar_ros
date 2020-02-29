@@ -66,15 +66,6 @@ RPlidarNode::RPlidarNode(const std::string & name, const rclcpp::NodeOptions & o
 {
   declare_parameters();
 
-  RCLCPP_ERROR(get_logger(), "NAME '%s'.",
-        name.c_str());
-
-  RCLCPP_INFO(get_logger(),
-    "HELLO");
-
-  RCLCPP_INFO(get_logger(),
-    name);
-
   RCLCPP_INFO(get_logger(),
     "RPLIDAR running on ROS 2 package rplidar_ros. SDK Version:" RPLIDAR_SDK_VERSION "");
 
