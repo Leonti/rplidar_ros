@@ -66,6 +66,15 @@ RPlidarNode::RPlidarNode(const std::string & name, const rclcpp::NodeOptions & o
 {
   declare_parameters();
 
+  RCLCPP_ERROR(get_logger(), "NAME '%s'.",
+        name.c_str());
+
+  RCLCPP_INFO(get_logger(),
+    "HELLO");
+
+  RCLCPP_INFO(get_logger(),
+    name);
+
   RCLCPP_INFO(get_logger(),
     "RPLIDAR running on ROS 2 package rplidar_ros. SDK Version:" RPLIDAR_SDK_VERSION "");
 
@@ -94,16 +103,16 @@ RPlidarNode::~RPlidarNode()
 
 void RPlidarNode::declare_parameters()
 {
-  declare_parameter<std::string>("channel_type", channel_type_);
-  declare_parameter<std::string>("tcp_ip", tcp_ip_);
-  declare_parameter<int>("tcp_port", tcp_port_);
-  declare_parameter<std::string>("serial_port", serial_port_);
-  declare_parameter<int>("serial_baudrate", serial_baudrate_);
-  declare_parameter<std::string>("frame_id", frame_id_);
-  declare_parameter<bool>("inverted", inverted_);
-  declare_parameter<bool>("angle_compensate", angle_compensate_);
-  declare_parameter<double>("max_distance", max_distance_);
-  declare_parameter<std::string>("scan_mode", scan_mode_);
+  channel_type_ = declare_parameter<std::string>("channel_type", channel_type_);
+  tcp_ip_ = declare_parameter<std::string>("tcp_ip", tcp_ip_);
+  tcp_port_ = declare_parameter<int>("tcp_port", tcp_port_);
+  serial_port_ = declare_parameter<std::string>("serial_port", serial_port_);
+  serial_baudrate_ = declare_parameter<int>("serial_baudrate", serial_baudrate_);
+  frame_id_ = declare_parameter<std::string>("frame_id", frame_id_);
+  inverted_ = declare_parameter<bool>("inverted", inverted_);
+  angle_compensate_ = declare_parameter<bool>("angle_compensate", angle_compensate_);
+  max_distance_ = declare_parameter<double>("max_distance", max_distance_);
+  scan_mode_ = declare_parameter<std::string>("scan_mode", scan_mode_);
 }
 
 void RPlidarNode::connect_driver()
@@ -415,7 +424,7 @@ int main(int argc, char * argv[])
 {
   rclcpp::init(argc, argv);
   try {
-    auto node = std::make_shared<rplidar_ros::RPlidarNode>();
+    auto node = std::make_shared<rplidar_ros::RPlidarNode>("rplidar");
     rclcpp::spin(node);
     rclcpp::shutdown();
   } catch (const std::runtime_error & error) {
